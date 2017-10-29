@@ -52,7 +52,7 @@ public class Referrer {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getReferrerLast() {
         return referrerLast;
     }

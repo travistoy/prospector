@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<table class="table">
+    <tr>
+        <th style="width:40%">First Name</th>
+        <th style="width:30%">Last Name</th>
+
+    </tr>
+
+    <tr th:each="user : ${users}">
+        <td><a th:href="'/user/view/' + ${user.id}" th:text="${user.toString()}"></a></td>
+        <td th:text="${user.userFirst}"></td>
+        <td th:text="${user.userLast}"></td>
+    </tr>
+</table>
 
 </body>
 </html>
