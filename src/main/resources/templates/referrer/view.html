@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<nav th:replace="fragments :: navigation"></nav>
+<h1 th:text="${title}">Default Title</h1>
+
+<div>
+    <label class="col-sm-2 control-label">Address:</label>
+    <p th:text="${referrer.referrerAddress + ', ' + referrer.referrerCity + ' ' + referrer.referrerState + '  ' + referrer.referrerZip}">Address</p>
+</div>
+<table class="table">
+
+    <tr>
+        <label class="col-sm-2 control-label">Phone:</label>
+        <p th:text="${referrer.referrerPhone}">Phone</p>
+        <label class="col-sm-2 control-label">Email:</label>
+        <p th:text="${referrer.referrerEmail}">Email</p>
+    </tr>
+</table>
+<div>
+    <a th:href="${'/referrer/edit/' + referrer.id}">Edit</a>
+</div>
+
+<h2>Prospects</h2>
+
+<p th:unless="${referrer.getProspects()} and ${referrer.getProspects().size()}">no prospect :(</p>
+
+<table class="table">
+
+    <tr th:each="prospect : ${referrer.getProspects()}">
+        <td><a th:href="'/prospect/view/' + ${prospect.id}" th:text="${prospect.toString()}"></a></td>
+
+    </tr>
+</table>
+</body>
+</html>

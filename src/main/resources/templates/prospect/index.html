@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<nav th:replace="fragments :: navigation"></nav>
+
+<h1 th:text="${title}">Default Title</h1>
+
+<p th:unless="${prospects} and ${prospects.size()}">no prospect :(</p>
+
+<table class="table">
+
+    <tr>
+        <th style="width:40%">Prospect Name</th>
+        <th style="width:30%">Referrer</th>
+        <th style="width:10%">Date Created</th>
+        <th style="width:10%">Date Quoted</th>
+        <th style="width:10%">Date Sold</th>
+    </tr>
+
+    <tr th:each="prospect : ${prospects}">
+        <td><a th:href="'/prospect/view/' + ${prospect.id}" th:text="${prospect.toString()}"></a></td>
+        <td th:text="${prospect.referrer}"></td>
+        <td th:text="${prospect.created}"></td>
+        <td th:text="${prospect.quoteDate}"></td>
+        <td th:text="${prospect.soldDate}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<nav th:replace="fragments :: navigation"></nav>
+
+<h1 th:text="${title}">Default Title</h1>
+
+<a href="/referrer/add">Add Referrer</a> |
+<a href="/referrer/remove">Remove Referrer</a>
+
+<p th:unless="${referrers} and ${referrers.size()}">no referrers :(</p>
+
+<table class="table">
+
+
+
+    <tr>
+        <th style="width:40%">Referrer Name</th>
+        <th style="width:30%">Address</th>
+        <th style="width:10%">Phone</th>
+        <th style="width:20%">Email</th>
+
+    </tr>
+
+    <tr th:each="referrer : ${referrers}">
+        <td><a th:href="'/referrer/view/' + ${referrer.id}" th:text="${referrer.toString()}"></a></td>
+        <td th:text="${referrer.referrerAddress}"></td>
+        <td th:text="${referrer.referrerPhone}"></td>
+        <td th:text="${referrer.referrerEmail}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+
+<h1 th:text="${title}">Default Title</h1>
+<div>
+    <label class="col-sm-2 control-label">Line Type:</label>
+    <p th:text="${prospect.type}">Line Type</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Address:</label>
+    <p th:text="${prospect.address + ', ' + prospect.city + ' ' + prospect.state + '  ' + prospect.zip}">Address</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Phone:</label>
+    <p th:text="${prospect.phone}">Phone</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Email:</label>
+    <p th:text="${prospect.email}">Email</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Creation Date:</label>
+    <p th:text="${prospect.created}">Creation Date</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Referrer:</label>
+    <p><span th:text="${prospect.referrer != null}? ${prospect.referrer.toString()}: '(No Referrer)'">Referrer</span></p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Quote Date:</label>
+    <p th:text="${prospect.quoteDate}">Quote Date:</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Sold Date:</label>
+    <p th:text="${prospect.soldDate}">Sold Date</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Premium:</label>
+    <p th:text="${prospect.premium}">Premium</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Commission Rate:</label>
+    <p th:text="${prospect.commissionRate}">Commission Rate</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Commission:</label>
+    <p th:text="${prospect.commission}">Commission</p>
+</div>
+<div>
+    <a th:href="${'/prospect/edit/' + prospect.id}">Edit</a>
+</div>
+
+
+</body>
+</html>
