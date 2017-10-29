@@ -49,6 +49,10 @@ public class Referrer {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getReferrerLast() {
         return referrerLast;
     }
