@@ -87,12 +87,21 @@ public class ProspectController {
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm(@ModelAttribute @Valid Prospect prospect, Model model, @RequestParam int id){
-        Prospect prospectToEdit = prospectDao.findOne(id);
-
+    public String processEditForm(@Valid Prospect prospect,Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id){
+        if (errors.hasErrors()){
+            model.addAttribute("referrers", referrerDao.findAll());
+            return "prospect/add";}
+        Referrer ref;
+        if (referrerId == 0){
+            ref = null;
+        }
+        else {
+            ref = referrerDao.findOne(referrerId);
+        }
+        prospect.setReferrer(ref);
         prospectDao.save(prospect);
 
-        return "redirect:";
+        return "redirect:/prospect/view/{id}";
     }
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemoveProspectForm(Model model) {

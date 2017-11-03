@@ -51,7 +51,7 @@ public class Prospect {
     // @ManyToOne
     // private User user;
 
-    public Prospect(String name, String firstName, String address, String city, State state, int zip, String phone, String email, LocalDate created, LineType type){
+    public Prospect(String name, String firstName, String address, String city, State state, int zip, String phone, String email, LocalDate created, LineType type, double premium, double commissionRate, boolean thankYou){
         this.name = name;
         this.firstName = firstName;
         this.address = address;
@@ -63,6 +63,7 @@ public class Prospect {
         this.created = created;
         this.type = type;
         this.premium = premium;
+        this.commissionRate = commissionRate;
         this.commission = commission;
         this.thankYou = thankYou;
     }
@@ -71,6 +72,10 @@ public class Prospect {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
