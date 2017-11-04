@@ -86,7 +86,7 @@ public class ProspectController {
         return "prospect/edit";
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
     public String processEditForm(@Valid Prospect prospect,Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id){
         if (errors.hasErrors()){
             model.addAttribute("referrers", referrerDao.findAll());
