@@ -184,7 +184,7 @@ public class Prospect {
         this.premium = premium;
     }
 
-    public double getCommissionRate() { this.commissionRate = this.commissionRate/100;
+    public double getCommissionRate() { this.commissionRate = commissionRate;
         return commissionRate;
     }
 

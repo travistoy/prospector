@@ -31,11 +31,11 @@
 </div>
 <div>
     <label class="col-sm-2 control-label">Quote Date:</label>
-    <p th:text="${prospect.quoteDate}">Quote Date:</p>
+    <p><span th:text="${prospect.quoteDate != null}? ${prospect.quoteDate}: '(No Quote Date)'">Quote Date:</span></p>
 </div>
 <div>
     <label class="col-sm-2 control-label">Sold Date:</label>
-    <p th:text="${prospect.soldDate}">Sold Date</p>
+    <p><span th:text="${prospect.soldDate != null}? ${prospect.soldDate}: '(No Sold Date)'">Sold Date</span></p>
 </div>
 <div>
     <label class="col-sm-2 control-label">Premium:</label>
@@ -48,6 +48,10 @@
 <div>
     <label class="col-sm-2 control-label">Commission:</label>
     <p th:text="${prospect.commission}">Commission</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Thank You Sent:</label>
+    <p><span th:text="${prospect.thankYou}? 'Yes': '(No)'">ThankYou</span></p>
 </div>
 <div>
     <a th:href="${'/prospect/edit/' + prospect.id}">Edit</a>
