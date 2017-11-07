@@ -25,7 +25,6 @@ public class ProspectController {
     @Autowired
     private ReferrerDao referrerDao;
 
-
     @RequestMapping(value = "")
     public String index(Model model ) {
 
@@ -87,10 +86,10 @@ public class ProspectController {
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
-    public String processEditForm(@Valid Prospect prospect,Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id){
+    public String processEditForm(@Valid Prospect prospect, Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id){
         if (errors.hasErrors()){
             model.addAttribute("referrers", referrerDao.findAll());
-            return "prospect/add";}
+            return "prospect/edit";}
         Referrer ref;
         if (referrerId == 0){
             ref = null;

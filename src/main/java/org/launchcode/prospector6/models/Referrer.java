@@ -32,6 +32,7 @@ public class Referrer {
     @JoinColumn(name = "referrer_id")
     private List<Prospect> prospects = new ArrayList<>();
 
+
     public Referrer(String referrerLast, String referrerFirst, String referrerAddress, String referrerCity, String referrerState, int referrerZip, String referrerPhone, String referrerEmail){
         this.referrerLast = referrerLast;
         this.referrerFirst = referrerFirst;

@@ -48,10 +48,8 @@ public class Prospect {
     @ManyToOne
     private Referrer referrer;
 
-    // @ManyToOne
-    // private User user;
 
-    public Prospect(String name, String firstName, String address, String city, State state, int zip, String phone, String email, LocalDate created, LineType type, double premium, double commissionRate, boolean thankYou){
+    public Prospect(String name, String firstName, String address, String city, State state, int zip, String phone, String email, LocalDate created, LineType type, LocalDate quoteDate, double premium, double commissionRate, LocalDate soldDate, boolean thankYou){
         this.name = name;
         this.firstName = firstName;
         this.address = address;
@@ -62,9 +60,11 @@ public class Prospect {
         this.email = email;
         this.created = created;
         this.type = type;
+        this.quoteDate = quoteDate;
         this.premium = premium;
         this.commissionRate = commissionRate;
         this.commission = commission;
+        this.soldDate = soldDate;
         this.thankYou = thankYou;
     }
 
@@ -104,9 +104,7 @@ public class Prospect {
     }
 
 
-    public LocalDate getCreated() {
-        return created;
-    }
+    public LocalDate getCreated() { return created; }
 
     public void setCreated(LocalDate created) {
         this.created = created;

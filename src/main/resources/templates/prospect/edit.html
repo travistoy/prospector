@@ -3,7 +3,7 @@
 <head th:replace="fragments :: head"></head>
 
 <body>
-<main role="main" class="container">
+
 <nav th:replace="fragments :: navigation"></nav>
 
 <h1 th:text="${title}">Default Title</h1>
@@ -67,14 +67,22 @@
         </select>
     </div>
     <div class="form-group">
+        <label th:for="quoteDate">Quote Date:</label>
+        <input class="form-control" th:field="*{quoteDate}" />
+    </div>
+    <div class="form-group">
         <label th:for="premium">Premium</label>
         <input class="form-control" th:field="*{premium}" />
     </div>
+
     <div class="form-group">
         <label th:for="commissionRate">commissionRate</label>
         <input class="form-control" th:field="*{commissionRate}" />
     </div>
-
+    <div class="form-group">
+        <label th:for="soldDate">Sold Date</label>
+        <input class="form-control" th:field="*{soldDate}" />
+    </div>
     <div th:class="checkbox">
         <input type="checkbox" name="thankYou" id="${thankYou}" th:value="true"/>
         <label th:for="${thankYou}">Thank You Sent</label>
@@ -83,6 +91,5 @@
     <input type="submit" value="Edit Prospect" />
 
 </form>
-</main>
 </body>
 </html>

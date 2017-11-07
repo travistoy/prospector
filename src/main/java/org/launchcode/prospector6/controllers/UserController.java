@@ -1,6 +1,5 @@
 package org.launchcode.prospector6.controllers;
 
-import org.launchcode.prospector6.models.Referrer;
 import org.launchcode.prospector6.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +42,7 @@ public class UserController {
     public String view(Model model, @PathVariable int id) {
         // use the statically defined users for now until a DAO is created
         currentUser = users[id-1];
-        return "referrer/index";
+        model.addAttribute("title", currentUser);
+        return "user/view";
     }
 }
