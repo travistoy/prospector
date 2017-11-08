@@ -8,6 +8,7 @@ import org.launchcode.prospector6.models.State;
 import org.launchcode.prospector6.models.data.ProspectDao;
 import org.launchcode.prospector6.models.data.ReferrerDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -46,7 +47,7 @@ public class ProspectController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddProspectForm(@ModelAttribute @Valid Prospect newProspect,
-                                         Errors errors, @RequestParam int referrerId, Model model) {
+                                         Errors errors, @RequestParam int referrerId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, Model model) {
         if (errors.hasErrors()){
             model.addAttribute("title", "Add Prospect");
             model.addAttribute("referrers", referrerDao.findAll());

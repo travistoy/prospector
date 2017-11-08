@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
+
+<head th:replace="fragments :: head">
+    <link rel="stylesheet" href="https://uxsolutions.github.io/bootstrap-datepicker/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" />
+
+</head>
+
 <body>
 <nav th:replace="fragments :: navigation"></nav>
 
@@ -64,9 +69,19 @@
             </option>
         </select>
     </div>
+    <div class="input-group date">
+        <input type="text" id="startDate" name="startDate" class="form-control" value="2012-12-02" />
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+    </div>
     <input type="submit" value="Add Prospect" />
 
-</form>
+</form>    <script src="https://uxsolutions.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+    $('#startDate').datepicker({ format:'yyyy-mm-dd'});
+</script>
 
 </body>
 </html>
