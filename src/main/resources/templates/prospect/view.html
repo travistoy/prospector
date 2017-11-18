@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <head th:replace="fragments :: head"></head>
-<body>
+<body class="container">
 <nav th:replace="fragments :: navigation"></nav>
 
 <h1 th:text="${title}">Default Title</h1>
@@ -11,7 +11,7 @@
 </div>
 <div>
     <label class="col-sm-2 control-label">Address:</label>
-    <p th:text="${prospect.address + ', ' + prospect.city + ' ' + prospect.state + '  ' + prospect.zip}">Address</p>
+    <p th:text="${prospect.address + ', ' + prospect.city + ' ' + prospect.state + '   ' + prospect.zip}">Address</p>
 </div>
 <div>
     <label class="col-sm-2 control-label">Phone:</label>
@@ -31,27 +31,39 @@
 </div>
 <div>
     <label class="col-sm-2 control-label">Quote Date:</label>
-    <p><span th:text="${prospect.quoteDate != null}? ${prospect.quoteDate}: '(No Quote Date)'">Quote Date:</span></p>
+    <p th:text="${prospect.quoteDate != null}? ${prospect.quoteDate}: '(No Quote Date)'">Quote Date:</p>
 </div>
 <div>
     <label class="col-sm-2 control-label">Sold Date:</label>
-    <p><span th:text="${prospect.soldDate != null}? ${prospect.soldDate}: '(No Sold Date)'">Sold Date</span></p>
+    <p th:text="${prospect.soldDate != null}? ${prospect.soldDate}: '(No Sold Date)'">Sold Date</p>
 </div>
 <div>
     <label class="col-sm-2 control-label">Premium:</label>
-    <p th:text="${prospect.premium}">Premium</p>
+    <p th:text="${'$ ' +prospect.premium}">Premium</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Commission Rate:</label>
+    <label class="col-sm-2 control-label">Commission Rate (%):</label>
     <p th:text="${prospect.commissionRate}">Commission Rate</p>
 </div>
 <div>
     <label class="col-sm-2 control-label">Commission:</label>
-    <p th:text="${prospect.commission}">Commission</p>
+    <p th:text="${'$ '+prospect.commission}">Commission</p>
+</div>
+<div class="form-group">
+    <input type="checkbox" name="thankYou" id="${prospect.thankYou}" th:checked="${prospect.thankYou}" th:readonly="true" />
+    <label th:for="${prospect.thankYou}">Thank You Sent</label>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Thank You Sent:</label>
-    <p><span th:text="${prospect.thankYou}? 'Yes': '(No)'">ThankYou</span></p>
+    <label class="col-sm-2 control-label">Days Between Creation and Quote:</label>
+    <p th:text="${prospect.quotedFromCreated}">quotedFromCreated</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Days Between Quote and Sold:</label>
+    <p th:text="${prospect.soldFromQuoted}">soldFromQuoted</p>
+</div>
+<div>
+    <label class="col-sm-2 control-label">Days Between Creation and Sold:</label>
+    <p th:text="${prospect.soldFromCreated}">soldFromCreated</p>
 </div>
 <div>
     <a th:href="${'/prospect/edit/' + prospect.id}">Edit</a>

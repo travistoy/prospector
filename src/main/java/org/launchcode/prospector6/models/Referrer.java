@@ -24,16 +24,18 @@ public class Referrer {
     private String referrerAddress;
     private String referrerCity;
     private String referrerState;
-    private int referrerZip;
+    private String referrerZip;
     private String referrerPhone;
     private String referrerEmail;
+
+    @ManyToOne
+    private User user;
 
     @OneToMany
     @JoinColumn(name = "referrer_id")
     private List<Prospect> prospects = new ArrayList<>();
 
-
-    public Referrer(String referrerLast, String referrerFirst, String referrerAddress, String referrerCity, String referrerState, int referrerZip, String referrerPhone, String referrerEmail){
+    public Referrer(String referrerLast, String referrerFirst, String referrerAddress, String referrerCity, String referrerState, String referrerZip, String referrerPhone, String referrerEmail){
         this.referrerLast = referrerLast;
         this.referrerFirst = referrerFirst;
         this.referrerAddress = referrerAddress;
@@ -50,9 +52,7 @@ public class Referrer {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId (int id) { this.id = id; }
 
     public String getReferrerLast() {
         return referrerLast;
@@ -106,11 +106,11 @@ public class Referrer {
         this.referrerState = referrerState;
     }
 
-    public int getReferrerZip() {
+    public String getReferrerZip() {
         return referrerZip;
     }
 
-    public void setReferrerZip(int referrerZip) {
+    public void setReferrerZip(String referrerZip) {
         this.referrerZip = referrerZip;
     }
 
@@ -128,6 +128,14 @@ public class Referrer {
 
     public void setReferrerEmail(String referrerEmail) {
         this.referrerEmail = referrerEmail;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser (User user) {
+        this.user = user;
     }
 
     public List<Prospect> getProspects() {return prospects;}

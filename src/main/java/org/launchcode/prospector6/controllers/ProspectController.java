@@ -26,8 +26,9 @@ public class ProspectController {
     @Autowired
     private ReferrerDao referrerDao;
 
+
     @RequestMapping(value = "")
-    public String index(Model model ) {
+    public String index(Model model) {
 
         model.addAttribute("prospects", prospectDao.findAll());
         model.addAttribute("title", "My Prospects");
@@ -47,7 +48,7 @@ public class ProspectController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddProspectForm(@ModelAttribute @Valid Prospect newProspect,
-                                         Errors errors, @RequestParam int referrerId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, Model model) {
+                                         Errors errors, @RequestParam int referrerId, Model model) {
         if (errors.hasErrors()){
             model.addAttribute("title", "Add Prospect");
             model.addAttribute("referrers", referrerDao.findAll());
@@ -55,7 +56,7 @@ public class ProspectController {
         }
         Referrer ref;
         if (referrerId == 0){
-             ref = null;
+            ref = null;
         }
         else {
             ref = referrerDao.findOne(referrerId);
@@ -69,10 +70,10 @@ public class ProspectController {
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String viewProspect( Model model, @PathVariable int id){
 
-            Prospect pros = prospectDao.findOne(id);
-            model.addAttribute("title", pros.toString());
-            model.addAttribute("prospect", pros);
-                return "prospect/view";
+        Prospect pros = prospectDao.findOne(id);
+        model.addAttribute("title", pros.toString());
+        model.addAttribute("prospect", pros);
+        return "prospect/view";
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
@@ -87,10 +88,11 @@ public class ProspectController {
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
-    public String processEditForm(@Valid Prospect prospect, Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id){
+    public String processEditForm( @Valid Prospect prospect, Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate quoteDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate soldDate ){
         if (errors.hasErrors()){
             model.addAttribute("referrers", referrerDao.findAll());
-            return "prospect/edit";}
+            return "prospect/edit";
+        }
         Referrer ref;
         if (referrerId == 0){
             ref = null;
@@ -98,11 +100,14 @@ public class ProspectController {
         else {
             ref = referrerDao.findOne(referrerId);
         }
-        prospect.setReferrer(ref);
-        prospectDao.save(prospect);
 
+        prospect.setReferrer(ref);
+        prospect.setQuoteDate(quoteDate);
+        prospect.setSoldDate(soldDate);
+        prospectDao.save(prospect);
         return "redirect:/prospect/view/{id}";
     }
+
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemoveProspectForm(Model model) {
         model.addAttribute("prospects", prospectDao.findAll());

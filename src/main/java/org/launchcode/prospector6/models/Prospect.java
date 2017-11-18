@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 public class Prospect {
@@ -27,12 +28,12 @@ public class Prospect {
     private String address;
     private String city;
     private State state;
-    private int zip;
+    private String zip;
     private String phone;
     private String email;
     private LineType type;
     private double premium;
-    private double commissionRate;
+    private int commissionRate;
     private double commission;
     private long quotedFromCreated;
     private long soldFromCreated;
@@ -40,32 +41,49 @@ public class Prospect {
     private boolean thankYou;
 
 
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate created;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate quoteDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate soldDate;
 
     @ManyToOne
     private Referrer referrer;
 
+    @ManyToOne
+    private User user;
 
-    public Prospect(String name, String firstName, String address, String city, State state, int zip, String phone, String email, LocalDate created, LineType type, LocalDate quoteDate, double premium, double commissionRate, LocalDate soldDate, boolean thankYou){
+    public Prospect(String name, String firstName, String address, String city, State state, String zip, String phone, String email, LineType type, LocalDate quoteDate, double premium, int commissionRate, LocalDate soldDate ){
+
+        if(quoteDate != null) {
+            if (quoteDate.isBefore (this.created)) {
+                throw new IllegalArgumentException("Date needs to be after creation date");
+            }
+        }
+        if(soldDate !=null) {
+            if (soldDate.isBefore(quoteDate)) {
+                throw new IllegalArgumentException("Date needs to be after quote date");
+            }
+        }
         this.name = name;
         this.firstName = firstName;
+        this.created = created;
         this.address = address;
         this.city = city;
         this.state = state;
         this.zip = zip;
         this.phone = phone;
         this.email = email;
-        this.created = created;
         this.type = type;
         this.quoteDate = quoteDate;
         this.premium = premium;
         this.commissionRate = commissionRate;
         this.commission = commission;
         this.soldDate = soldDate;
-        this.thankYou = thankYou;
+        this.quotedFromCreated = quotedFromCreated;
+        this.soldFromCreated = soldFromCreated;
+        this.soldFromQuoted = soldFromQuoted;
     }
 
     public Prospect(){}
@@ -74,9 +92,7 @@ public class Prospect {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId (int id) { this.id = id; }
 
     public String getName() {
         return name;
@@ -104,7 +120,9 @@ public class Prospect {
     }
 
 
-    public LocalDate getCreated() { return created; }
+    public LocalDate getCreated() {
+        return created;
+    }
 
     public void setCreated(LocalDate created) {
         this.created = created;
@@ -150,11 +168,11 @@ public class Prospect {
         this.state = state;
     }
 
-    public int getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 
@@ -182,15 +200,15 @@ public class Prospect {
         this.premium = premium;
     }
 
-    public double getCommissionRate() { this.commissionRate = commissionRate;
+    public int getCommissionRate() { this.commissionRate = commissionRate;
         return commissionRate;
     }
 
-    public void setCommissionRate(double commissionRate) {
+    public void setCommissionRate(int commissionRate) {
         this.commissionRate = commissionRate;
     }
 
-    public double getCommission() { this.commission = this.premium * this.commissionRate;
+    public double getCommission() { this.commission = premium * commissionRate/100;
         this.commission = BigDecimal.valueOf(this.commission).setScale(2, RoundingMode.HALF_UP).doubleValue();
         return commission; }
 
@@ -203,6 +221,15 @@ public class Prospect {
     public void setReferrer(Referrer referrer) {
         this.referrer = referrer;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser (User user) {
+        this.user = user;
+    }
+
 
     public LineType getType() {
         return type;
@@ -219,4 +246,30 @@ public class Prospect {
     public void setThankYou(boolean thankYou) {
         this.thankYou = thankYou;
     }
+
+    public long getQuotedFromCreated() {
+        this.quotedFromCreated = ChronoUnit.DAYS.between(this.created, this.quoteDate);
+        return quotedFromCreated;
+    }
+
+    public void setQuotedFromCreated(long quotedFromCreated) {
+        this.quotedFromCreated = quotedFromCreated;
+    }
+
+    public long getSoldFromCreated() {
+        this.soldFromCreated = ChronoUnit.DAYS.between(this.created, this.soldDate);
+        return soldFromCreated;
+    }
+
+    public void setSoldFromCreated(long soldFromCreated) {
+        this.soldFromCreated = soldFromCreated;
+    }
+
+    public long getSoldFromQuoted() {
+        this.soldFromQuoted = ChronoUnit.DAYS.between(this.quoteDate, this.soldDate);
+        return soldFromQuoted;
+    }
+
+    public void setSoldFromQuoted(long soldFromQuoted) {this.soldFromQuoted = soldFromQuoted;}
+
 }

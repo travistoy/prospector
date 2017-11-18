@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
 
-<body>
-
+<head th:replace="fragments :: head">
+    <link rel="stylesheet" href="https://uxsolutions.github.io/bootstrap-datepicker/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" />
+</head>
+<body class="container">
 <nav th:replace="fragments :: navigation"></nav>
 
 <h1 th:text="${title}">Default Title</h1>
 
+
 <form method="post" style="max-width:600px;" th:object="${prospect}">
     <input type="hidden" th:value="*{id}" name="id"/>
+    <input type="hidden" th:value="*{created}" name="created"/>
     <div class="form-group">
         <label th:for="name">Last Name or Business Name</label>
         <input class="form-control" th:field="*{name}" />
@@ -25,7 +28,9 @@
             <option th:value="0" text="Please Select"></option>
             <option th:each="referrer : ${referrers}"
                     th:text="${referrer.toString()}"
-                    th:value="${referrer.id}"></option>
+                    th:value="${referrer.id}"
+                    th:selected="(${referrer.id} == *{referrer.id})">
+            </option>
         </select>
     </div>
     <div class="form-group">
@@ -66,30 +71,47 @@
             </option>
         </select>
     </div>
-    <div class="form-group">
-        <label th:for="quoteDate">Quote Date:</label>
-        <input class="form-control" th:field="*{quoteDate}" />
+    <div class="input-group date">
+        <input type="text" id="quoteDate" name="quoteDate" class="form-control" value="2017-11-02" />
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
     </div>
     <div class="form-group">
         <label th:for="premium">Premium</label>
         <input class="form-control" th:field="*{premium}" />
     </div>
-
     <div class="form-group">
-        <label th:for="commissionRate">commissionRate</label>
+        <label th:for="commissionRate">Commission Rate</label>
         <input class="form-control" th:field="*{commissionRate}" />
     </div>
-    <div class="form-group">
-        <label th:for="soldDate">Sold Date</label>
-        <input class="form-control" th:field="*{soldDate}" />
+    <div class="input-group date">
+        <input type="text" id="soldDate" name="soldDate" class="form-control" value="2017-11-02" />
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
     </div>
-    <div th:class="checkbox">
-        <input type="checkbox" name="thankYou" id="${thankYou}" th:value="true"/>
+    <div class="form-group">
+        <input type="checkbox" name="thankYou" id="${thankYou}" th:checked="*{thankYou}" />
         <label th:for="${thankYou}">Thank You Sent</label>
     </div>
 
     <input type="submit" value="Edit Prospect" />
 
-</form>
+</form>     <script src="https://uxsolutions.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+    $('#quoteDate').datepicker({ format:'yyyy-mm-dd',
+        clearBtn: true,
+        autoclose: true,
+        todayHighlight: true});
+</script>
+
+<script>
+    $('#soldDate').datepicker({ format:'yyyy-mm-dd',
+        clearBtn: true,
+        autoclose: true,
+        todayHighlight: true});
+</script>
 </body>
 </html>

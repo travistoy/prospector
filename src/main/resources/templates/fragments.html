@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:fragment="head"> 
+<head th:fragment="head">
     <meta charset="UTF-8"/>
     <title th:text="${title}">My Prospects</title>
 
@@ -14,8 +14,6 @@
 <nav th:fragment="navigation">
     <a th:href="@{'/user/view/'+${T(org.launchcode.prospector6.controllers.UserController).currentUser.id}}" th:text="${T(org.launchcode.prospector6.controllers.UserController).currentUser.userFirst}">User</a> |
     <a href="/prospect">Prospect List</a> |
-    <a href="/prospect/add">Add Prospect</a> |
-    <a href="/prospect/remove">Remove Prospect</a> |
     <a href="/referrer">Referrer List</a>
 </nav>
 

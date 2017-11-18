@@ -6,6 +6,9 @@
 
 <h1 th:text="${title}">Default Title</h1>
 
+<a href="/prospect/add">Add Prospect</a> |
+<a href="/prospect/remove">Remove Prospect</a>
+
 <p th:unless="${prospects} and ${prospects.size()}">no prospect :(</p>
 
 <table class="table">
