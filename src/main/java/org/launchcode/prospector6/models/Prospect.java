@@ -133,6 +133,11 @@ public class Prospect {
     }
 
     public void setQuoteDate(LocalDate quoteDate) {
+        if(quoteDate != null) {
+            if (quoteDate.isBefore (this.created)) {
+                throw new IllegalArgumentException("Date needs to be after creation date");
+            }
+        }
         this.quoteDate = quoteDate;
     }
 
@@ -141,6 +146,12 @@ public class Prospect {
     }
 
     public void setSoldDate(LocalDate soldDate) {
+
+        if(soldDate !=null) {
+            if (soldDate.isBefore(quoteDate)) {
+                throw new IllegalArgumentException("Date needs to be after quote date");
+            }
+        }
         this.soldDate = soldDate;
     }
 
@@ -248,6 +259,9 @@ public class Prospect {
     }
 
     public long getQuotedFromCreated() {
+        if (this.quoteDate == null) {
+            return 0;
+        }
         this.quotedFromCreated = ChronoUnit.DAYS.between(this.created, this.quoteDate);
         return quotedFromCreated;
     }
@@ -257,6 +271,8 @@ public class Prospect {
     }
 
     public long getSoldFromCreated() {
+        if (this.soldDate == null)
+            return 0;
         this.soldFromCreated = ChronoUnit.DAYS.between(this.created, this.soldDate);
         return soldFromCreated;
     }
@@ -266,6 +282,8 @@ public class Prospect {
     }
 
     public long getSoldFromQuoted() {
+        if (this.soldDate == null || this.quoteDate == null)
+            return 0;
         this.soldFromQuoted = ChronoUnit.DAYS.between(this.quoteDate, this.soldDate);
         return soldFromQuoted;
     }

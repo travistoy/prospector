@@ -42,7 +42,7 @@ public class UserController {
 
     @RequestMapping(value="view/{id}")
     public String view(Model model, @PathVariable int id) {
-        User currentUser = userDao.findOne(id);
+        currentUser = userDao.findOne(id);
         model.addAttribute("title", currentUser);
         model.addAttribute("prospects", prospectDao.findAll());
         return "user/view";
