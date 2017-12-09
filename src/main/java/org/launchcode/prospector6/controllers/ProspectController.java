@@ -7,6 +7,7 @@ import org.launchcode.prospector6.models.Referrer;
 import org.launchcode.prospector6.models.State;
 import org.launchcode.prospector6.models.data.ProspectDao;
 import org.launchcode.prospector6.models.data.ReferrerDao;
+import org.launchcode.prospector6.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class ProspectController {
 
     @Autowired
     private ReferrerDao referrerDao;
+
+    @Autowired
+    private UserDao userDao;
 
 
     @RequestMapping(value = "")
@@ -56,13 +60,17 @@ public class ProspectController {
         }
         Referrer ref;
         if (referrerId == 0){
-            ref = null;
+            ref = new Referrer();
+            ref.setId(0);
+            ref.setReferrerFirst("Select a value");
         }
         else {
             ref = referrerDao.findOne(referrerId);
         }
         newProspect.setReferrer(ref);
         newProspect.setCreated(LocalDate.now());
+        /*if (UserController.currentUser != null){
+            newProspect.setUser(UserController.currentUser);} */
         prospectDao.save(newProspect);
         return "redirect:";
     }
@@ -88,12 +96,15 @@ public class ProspectController {
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
-    public String processEditForm( @Valid Prospect prospect, Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate quoteDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate soldDate ){
-        if (errors.hasErrors()){
+    public String processEditForm( @Valid Prospect prospect, Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate quoteDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate soldDate){
+
+        if (errors.hasErrors()) {
             model.addAttribute("referrers", referrerDao.findAll());
             return "prospect/edit";
         }
+
         Referrer ref;
+        ref = new Referrer();
         if (referrerId == 0){
             ref = null;
         }

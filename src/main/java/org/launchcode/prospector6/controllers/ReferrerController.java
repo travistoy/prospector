@@ -44,7 +44,9 @@ public class ReferrerController {
             model.addAttribute("title", "Add Referrer");
             return "redirect:referrer/" + newReferrer.getId();
         }
-
+        /*if (UserController.currentUser !=null) {
+            newReferrer.setUser(UserController.currentUser);
+        } */
         referrerDao.save(newReferrer);
         return "redirect:/referrer";
     }

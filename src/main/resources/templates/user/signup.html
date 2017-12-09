@@ -1,46 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title></title>
-</head>
-<body>
+<head th:replace="fragments :: head"></head>
+<body class="container">
 
 <h1 th:text="${title}">Default Title</h1>
 
-<p class="error" th:text="${error}"></p>
-<form method="post">
-    <table>
-        <tr>
-            <td><label for="username">Username</label></td>
-            <td>
-                <input name="username" type="text" th:value="${username}"></input>
-                <span class="error" th:text="${username_error}"></span>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="password">Password</label></td>
-            <td>
-                <input name="password" type="password"></input>
-                <span class="error" th:text="${password_error}"></span>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="verify">Verify Password</label></td>
-            <td>
-                <input name="verify" type="password"></input>
-                <span class="error" th:text="${verify_error}"></span>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="email">Email</label></td>
-            <td>
-                <input name="email" type="email"></input>
-                <span class="error" th:text="${email_error}"></span>
-            </td>
-        </tr>
-    </table>
-    <button type="submit">Sign Up</button>
+<form method="post" style="max-width:600px;" th:object="${user}">
+    <div class="form-group">
+        <label th:for="userLast">Last Name</label>
+        <input class="form-control" th:field="*{userLast}" />
+        <span th:errors="*{userLast}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="userFirst">First Name</label>
+        <input class="form-control" th:field="*{userFirst}" />
+        <span th:errors="*{userFirst}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="password">Password</label>
+        <input class="form-control" type="password" th:field="*{password}" />
+        <span th:errors="*{password}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="verify">Verify</label>
+        <input class="form-control" type="password" th:field="*{verify}" />
+        <span th:errors="*{verify}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="email">Email</label>
+        <input class="form-control" th:field="*{email}" />
+        <span th:errors="*{email}" class="error"></span>
+    </div>
+    <input type="submit" value="Sign Up" />
+
 </form>
 
 </body>
