@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("prospect")
@@ -127,9 +128,11 @@ public class ProspectController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveProspectForm(@RequestParam int[] prospectIds) {
-        for (int prospectId : prospectIds) {
-            prospectDao.delete(prospectId);
+    public String processRemoveProspectForm(@RequestParam Optional<int[]> prospectIds) {
+        if (prospectIds.isPresent()) {
+            for (int prospectId : prospectIds.get()) {
+                prospectDao.delete(prospectId);
+            }
         }
         return "redirect:";
     }
