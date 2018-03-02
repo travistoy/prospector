@@ -73,5 +73,22 @@ public class UserController {
         return "redirect:";
         }
 
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String displayLoginForm(Model model) {
+        model.addAttribute("title", "Login");
+        model.addAttribute(new User());
+        return "user/login";
+    }
 
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public String processLoginForm(@Valid User user, @RequestParam String userName, @RequestParam String password, @RequestParam String verify,
+                                   Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Login");
+
+            return "user/login";
+        }
+
+        return "redirect:/user/view/{id}";
+    }
 }
