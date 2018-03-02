@@ -1,6 +1,8 @@
 package org.launchcode.prospector6.models;
 
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,7 +28,11 @@ public class Referrer {
     private String referrerState;
     private String referrerZip;
     private String referrerPhone;
+    private boolean isSelected;
+
+    @Email
     private String referrerEmail;
+
 
     @ManyToOne
     private User user;
@@ -136,6 +142,13 @@ public class Referrer {
 
     public void setUser (User user) {
         this.user = user;
+    }
+
+    public boolean isSelected(Integer referrerId) {
+        if (referrerId !=null) {
+            return referrerId.equals(id);
+        }
+        return false;
     }
 
     public List<Prospect> getProspects() {return prospects;}

@@ -15,10 +15,10 @@ public interface ProspectDao extends CrudRepository<Prospect, Integer>{
 
     public long count();
 
-    @Query(value = "SELECT SUM(p.premium) from Prospect p", nativeQuery = true)
+    @Query(value = "SELECT coalesce(SUM(p.premium),0) from Prospect p", nativeQuery = true)
         double getTotalPremium();
 
-    @Query(value = "SELECT SUM(p.commission) from Prospect p", nativeQuery = true)
+    @Query(value = "SELECT coalesce(SUM(p.commission),0) from Prospect p", nativeQuery = true)
     double getTotalCommission();
 
     List<Prospect> findByPremium(double premium);

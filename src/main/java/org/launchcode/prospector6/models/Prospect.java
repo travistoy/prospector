@@ -69,7 +69,6 @@ public class Prospect {
         this.quoteDate = quoteDate;
         this.premium = premium;
         this.commissionRate = commissionRate;
-        this.commission = commission;
         this.soldDate = soldDate;
         this.quotedFromCreated = quotedFromCreated;
         this.soldFromCreated = soldFromCreated;
@@ -286,5 +285,6 @@ public class Prospect {
     }
 
     public void setSoldFromQuoted(long soldFromQuoted) {this.soldFromQuoted = soldFromQuoted;}
+
 
 }

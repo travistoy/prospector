@@ -14,7 +14,8 @@
 <nav th:fragment="navigation">
     <a th:href="@{'/user/view/'+${T(org.launchcode.prospector6.controllers.UserController).currentUser.id}}" th:text="${T(org.launchcode.prospector6.controllers.UserController).currentUser.userFirst}">User</a> |
     <a href="/prospect">Prospect List</a> |
-    <a href="/referrer">Referrer List</a>
+    <a href="/referrer">Referrer List</a> |
+    <a href="/logout">Log Out</a>
 </nav>
 
 </body>

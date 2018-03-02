@@ -62,16 +62,14 @@ public class ProspectController {
         Referrer ref;
         if (referrerId == 0){
             ref = new Referrer();
-            ref.setId(0);
-            ref.setReferrerFirst("Select a value");
+            ref = null;
         }
         else {
             ref = referrerDao.findOne(referrerId);
         }
         newProspect.setReferrer(ref);
         newProspect.setCreated(LocalDate.now());
-        /*if (UserController.currentUser != null){
-            newProspect.setUser(UserController.currentUser);} */
+
         prospectDao.save(newProspect);
         return "redirect:";
     }
@@ -97,7 +95,7 @@ public class ProspectController {
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
-    public String processEditForm( @Valid Prospect prospect, Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate quoteDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate soldDate){
+    public String processEditForm( @Valid Prospect prospect, Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id, @RequestParam double commission, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate quoteDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate soldDate){
 
         if (errors.hasErrors()) {
             model.addAttribute("referrers", referrerDao.findAll());
@@ -115,6 +113,7 @@ public class ProspectController {
 
         prospect.setReferrer(ref);
         prospect.setQuoteDate(quoteDate);
+        prospect.setCommission(commission);
         prospect.setSoldDate(soldDate);
         prospectDao.save(prospect);
         return "redirect:/prospect/view/{id}";

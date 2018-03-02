@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("referrer")
@@ -87,9 +88,11 @@ public class ReferrerController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveReferrerForm(@RequestParam int[] referrerids) {
-        for (int referrerid : referrerids) {
-            referrerDao.delete(referrerid);
+    public String processRemoveReferrerForm(@RequestParam Optional<int[]> referrerids) {
+        if (referrerids.isPresent()) {
+            for (int referrerid : referrerids.get()) {
+                referrerDao.delete(referrerid);
+            }
         }
         return "redirect:/referrer";
     }

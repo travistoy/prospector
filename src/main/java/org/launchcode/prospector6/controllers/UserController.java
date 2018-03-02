@@ -13,9 +13,6 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dcannarozzi on 10/28/17.
- */
 @Controller
 @RequestMapping("user")
 public class UserController {

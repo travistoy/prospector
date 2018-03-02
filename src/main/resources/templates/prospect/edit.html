@@ -27,9 +27,9 @@
         <select name="referrerId">
             <option th:value="0" text="Please Select"></option>
             <option th:each="referrer : ${referrers}"
-                    th:text="${referrer.toString()}"
                     th:value="${referrer.id}"
-                    th:selected="(${referrer.id} == *{referrer.id})">
+                    th:selected="${referrer.id} == *{referrer.id}"
+                    th:text="${referrer.toString()}">
             </option>
         </select>
     </div>
@@ -72,7 +72,8 @@
         </select>
     </div>
     <div class="input-group date">
-        <input type="text" id="quoteDate" name="quoteDate" class="form-control" value="2017-11-02" />
+        <labe th:for="quoteDate">Quote Date</labe>
+        <input type="text" id="quoteDate" name="quoteDate" class="form-control" value=''/>
         <div class="input-group-addon">
             <span class="glyphicon glyphicon-th"></span>
         </div>
@@ -90,6 +91,7 @@
         <input class="form-control" th:field="*{commission}" />
     </div>
     <div class="input-group date">
+        <label th:for="soldDate">Sold Date</label>
         <input type="text" id="soldDate" name="soldDate" class="form-control" value="2017-11-02" />
         <div class="input-group-addon">
             <span class="glyphicon glyphicon-th"></span>
@@ -108,14 +110,16 @@
     $('#quoteDate').datepicker({ format:'yyyy-mm-dd',
         clearBtn: true,
         autoclose: true,
-        todayHighlight: true});
+        todayHighlight: true})
+        var selected = $(this).var();
 </script>
 
 <script>
     $('#soldDate').datepicker({ format:'yyyy-mm-dd',
         clearBtn: true,
         autoclose: true,
-        todayHighlight: true});
+        todayHighlight: true}).datepicker("setDate", 'now'),
+        var selected = $(this).var();
 </script>
 </body>
 </html>

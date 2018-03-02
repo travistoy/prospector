@@ -1,5 +1,7 @@
 package org.launchcode.prospector6.models;
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,6 +19,10 @@ public class User {
     private int id;
 
     @NotNull
+    @Size(min=6, max=12)
+    private String userName;
+
+    @NotNull
     @Size(min=2, max=30)
     private String userLast;
 
@@ -31,6 +37,7 @@ public class User {
     @Transient
     private String verify;
 
+    @Email
     private String email;
 
     @OneToMany
@@ -41,7 +48,8 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Referrer> referrers = new ArrayList<>();
 
-    public User(String userLast, String userFirst, String password, String email){
+    public User(String userName, String userLast, String userFirst, String password, String email){
+        this.userName = userName;
         this.userLast = userLast;
         this.userFirst = userFirst;
         this.password = password;
@@ -56,6 +64,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getUserLast() {

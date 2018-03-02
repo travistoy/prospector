@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Prospector6Application {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Throwable{
 		SpringApplication.run(Prospector6Application.class, args);
 	}
 }
