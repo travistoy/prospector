@@ -16,6 +16,8 @@
     <a href="/prospect">Prospect List</a> |
     <a href="/referrer">Referrer List</a> |
     <a href="/logout">Log Out</a>
+
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 </nav>
 
 </body>
