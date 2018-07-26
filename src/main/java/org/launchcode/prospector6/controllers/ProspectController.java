@@ -19,6 +19,8 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static org.launchcode.prospector6.controllers.UserController.currentUser;
+
 @Controller
 @RequestMapping("prospect")
 public class ProspectController {
@@ -35,7 +37,7 @@ public class ProspectController {
     @RequestMapping(value = "")
     public String index(Model model) {
 
-        model.addAttribute("prospects", prospectDao.findAll());
+        model.addAttribute("prospects", prospectDao.findByUserId(currentUser.getId()));
         model.addAttribute("title", "My Prospects");
         model.addAttribute(new Prospect());
         return "prospect/index";
@@ -45,7 +47,7 @@ public class ProspectController {
     public String displayAddProspectForm(Model model) {
         model.addAttribute("title", "Add Prospect");
         model.addAttribute(new Prospect());
-        model.addAttribute("referrers", referrerDao.findAll());
+        model.addAttribute("referrers", referrerDao.findByUserId(currentUser.getId()));
         model.addAttribute("lineTypes", LineType.values());
         model.addAttribute("states", State.values());
         return "prospect/add";
@@ -56,7 +58,7 @@ public class ProspectController {
                                          Errors errors, @RequestParam int referrerId, Model model) {
         if (errors.hasErrors()){
             model.addAttribute("title", "Add Prospect");
-            model.addAttribute("referrers", referrerDao.findAll());
+            model.addAttribute("referrers", referrerDao.findByUserId(currentUser.getId()));
             return "prospect/add";
         }
         Referrer ref;
@@ -77,7 +79,7 @@ public class ProspectController {
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String viewProspect( Model model, @PathVariable int id){
 
-        Prospect pros = prospectDao.findOne(id);
+        Prospect pros = prospectDao.findByIdAndUserId(id, currentUser.getId());
         model.addAttribute("title", pros.toString());
         model.addAttribute("prospect", pros);
         return "prospect/view";
@@ -85,10 +87,10 @@ public class ProspectController {
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String displayEditProspectForm(@PathVariable int id, Model model){
-        Prospect props = prospectDao.findOne(id);
+        Prospect props = prospectDao.findByIdAndUserId(id, currentUser.getId());
         model.addAttribute("title", "Edit: " + props.toString());
         model.addAttribute("prospect", props);
-        model.addAttribute("referrers", referrerDao.findAll());
+        model.addAttribute("referrers", referrerDao.findByUserId(currentUser.getId()));
         model.addAttribute("states", State.values());
         model.addAttribute("lineTypes", LineType.values());
         return "prospect/edit";
@@ -98,7 +100,7 @@ public class ProspectController {
     public String processEditForm( @Valid Prospect prospect, Errors errors, Model model, @RequestParam int referrerId, @PathVariable Integer id, @RequestParam double commission, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate quoteDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate soldDate){
 
         if (errors.hasErrors()) {
-            model.addAttribute("referrers", referrerDao.findAll());
+            model.addAttribute("referrers", referrerDao.findByUserId(currentUser.getId()));
             return "prospect/edit";
         }
 
@@ -121,7 +123,7 @@ public class ProspectController {
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemoveProspectForm(Model model) {
-        model.addAttribute("prospects", prospectDao.findAll());
+        model.addAttribute("prospects", prospectDao.findByUserId(currentUser.getId()));
         model.addAttribute("title", "Remove Prospect");
         return "prospect/remove";
     }

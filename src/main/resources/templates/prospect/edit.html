@@ -28,7 +28,7 @@
             <option th:value="0" text="Please Select"></option>
             <option th:each="referrer : ${referrers}"
                     th:value="${referrer.id}"
-                    th:selected="${referrer.id} == *{referrer.id}"
+                    th:selected="${referrer.id} == *{referrer?.id}"
                     th:text="${referrer.toString()}">
             </option>
         </select>

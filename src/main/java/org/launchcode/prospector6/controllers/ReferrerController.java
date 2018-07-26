@@ -15,6 +15,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+import static org.launchcode.prospector6.controllers.UserController.currentUser;
+
 @Controller
 @RequestMapping("referrer")
 public class ReferrerController {
@@ -24,7 +26,7 @@ public class ReferrerController {
     @RequestMapping(value = "")
     public String index(Model model) {
 
-        model.addAttribute("referrers", referrerDao.findAll());
+        model.addAttribute("referrers", referrerDao.findByUserId(currentUser.getId()));
         model.addAttribute("title", "My Referrers");
         model.addAttribute(new Referrer());
         return "referrer/index";
@@ -55,7 +57,7 @@ public class ReferrerController {
     @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String viewReferrer(Model model, @PathVariable int id) {
 
-        Referrer refer = referrerDao.findOne(id);
+        Referrer refer = referrerDao.findByIdAndUserId(id, currentUser.getId());
         List<Prospect> prospects = refer.getProspects();
         model.addAttribute("title", refer.toString());
         model.addAttribute("referrer", refer);
@@ -66,7 +68,7 @@ public class ReferrerController {
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String displayEditReferrerForm(@PathVariable Integer id, Model model){
-        Referrer ref = referrerDao.findOne(id);
+        Referrer ref = referrerDao.findByIdAndUserId(id, currentUser.getId());
         model.addAttribute("title", "Edit: " + ref.toString());
         model.addAttribute("referrer", ref);
         model.addAttribute("states", State.values());
@@ -82,7 +84,7 @@ public class ReferrerController {
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemoveReferrerForm(Model model) {
-        model.addAttribute("referrers", referrerDao.findAll());
+        model.addAttribute("referrers", referrerDao.findByUserId(currentUser.getId()));
         model.addAttribute("title", "Remove Referrer");
         return "referrer/remove";
     }

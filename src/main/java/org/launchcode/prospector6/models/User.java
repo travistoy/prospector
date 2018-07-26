@@ -20,7 +20,7 @@ public class User {
 
     @NotNull
     @Size(min=6, max=12)
-    private String userName;
+    private String username;
 
     @NotNull
     @Size(min=2, max=30)
@@ -48,8 +48,8 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Referrer> referrers = new ArrayList<>();
 
-    public User(String userName, String userLast, String userFirst, String password, String email){
-        this.userName = userName;
+    public User(String username, String userLast, String userFirst, String password, String email){
+        this.username = username;
         this.userLast = userLast;
         this.userFirst = userFirst;
         this.password = password;
@@ -66,12 +66,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getUserLast() {

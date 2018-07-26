@@ -13,15 +13,18 @@ import java.util.List;
 @Transactional
 public interface ProspectDao extends CrudRepository<Prospect, Integer>{
 
-    public long count();
+    Prospect findByIdAndUserId(Integer id, Integer userid);
 
-    @Query(value = "SELECT coalesce(SUM(p.premium),0) from Prospect p", nativeQuery = true)
-        double getTotalPremium();
+    long countByUserId(Integer userid);
 
-    @Query(value = "SELECT coalesce(SUM(p.commission),0) from Prospect p", nativeQuery = true)
-    double getTotalCommission();
+    @Query(value = "SELECT coalesce(SUM(p.premium),0) from Prospect p WHERE user_id = ?1", nativeQuery = true)
+        double getTotalPremiumByUserId(Integer userid);
 
-    List<Prospect> findByPremium(double premium);
+    @Query(value = "SELECT coalesce(SUM(p.commission),0) from Prospect p WHERE user_id = ?1", nativeQuery = true)
+    double getTotalCommissionByUserId(Integer userid);
+
+
+    List<Prospect>findByUserId(Integer userId);
 
 
 

@@ -41,9 +41,9 @@ public class UserController {
     public String view(Model model, @PathVariable int id) {
         currentUser = userDao.findOne(id);
         model.addAttribute("title", currentUser);
-        model.addAttribute("totalProspects", prospectDao.count());
-        model.addAttribute("totalPremium", prospectDao.getTotalPremium());
-        model.addAttribute("totalCommission", prospectDao.getTotalCommission());
+        model.addAttribute("totalProspects", prospectDao.countByUserId(currentUser.getId()));
+        model.addAttribute("totalPremium", prospectDao.getTotalPremiumByUserId(currentUser.getId()));
+        model.addAttribute("totalCommission", prospectDao.getTotalCommissionByUserId(currentUser.getId()));
 
         return "user/view";
     }
@@ -52,7 +52,7 @@ public class UserController {
     public String displayAddUserForm(Model model) {
         model.addAttribute("title", "Sign Up");
         model.addAttribute(new User());
-        return "user/signup";
+        return "signup";
     }
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
@@ -61,34 +61,17 @@ public class UserController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Sign Up");
 
-            return "user/signup";
+            return "signup";
             }
         if (!newUser.getPassword().equals(newUser.getVerify())) {
             String verify_error = "Passwords Do Not Match.";
             model.addAttribute("verify_error", verify_error);
-            return "user/signup";
+            return "signup";
         }
 
         userDao.save(newUser);
         return "redirect:";
         }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String displayLoginForm(Model model) {
-        model.addAttribute("title", "Login");
-        model.addAttribute(new User());
-        return "user/login";
-    }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String processLoginForm(@Valid User user, @RequestParam String userName, @RequestParam String password, @RequestParam String verify,
-                                   Errors errors, Model model) {
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Login");
-
-            return "user/login";
-        }
-
-        return "redirect:/user/view/{id}";
-    }
 }

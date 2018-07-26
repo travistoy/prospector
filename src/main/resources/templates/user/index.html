@@ -13,7 +13,7 @@
     </tr>
 
     <tr th:each="user : ${users}">
-        <td><a th:href="'/user/view/' + ${user.id}" th:text="${user.toString()}"></a></td>
+        <td><a th:href="'/user/view/' + ${user.id}" th:text="${user.username}"></a></td>
         <td th:text="${user.userFirst}"></td>
         <td th:text="${user.userLast}"></td>
     </tr>
