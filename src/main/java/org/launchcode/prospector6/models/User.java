@@ -19,6 +19,7 @@ public class User {
     private int id;
 
     @NotNull
+    @Column(unique = true)
     @Size(min=6, max=12)
     private String username;
 
@@ -48,12 +49,15 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Referrer> referrers = new ArrayList<>();
 
-    public User(String username, String userLast, String userFirst, String password, String email){
+    private boolean enabled;
+
+    public User(String username, String userLast, String userFirst, String password, String email, boolean enabled){
         this.username = username;
         this.userLast = userLast;
         this.userFirst = userFirst;
         this.password = password;
         this.email = email;
+        this.enabled = enabled;
     }
 
     public User(){}
@@ -116,6 +120,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isEnabled() { this.enabled = enabled;
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<Prospect> getProspects() {return prospects;}

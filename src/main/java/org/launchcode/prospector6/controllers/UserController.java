@@ -22,6 +22,7 @@ public class UserController {
     @Autowired
     private ProspectDao prospectDao;
 
+
     public static User currentUser = new User();
     List<User> users = new ArrayList<User>();
 
@@ -68,9 +69,9 @@ public class UserController {
             model.addAttribute("verify_error", verify_error);
             return "signup";
         }
-
+        newUser.setEnabled(true);
         userDao.save(newUser);
-        return "redirect:";
+        return "redirect:user/view";
         }
 
 

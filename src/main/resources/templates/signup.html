@@ -6,10 +6,11 @@
 <h1 th:text="${title}">Default Title</h1>
 
 <form method="post" style="max-width:600px;" th:object="${user}">
+
     <div class="form-group">
-        <label th:for="userName">User Login</label>
-        <input class="form-control" th:field="*{userName}" />
-        <span th:errors="*{userName}" class="error"></span>
+        <label th:for="username">User Name</label>
+        <input class="form-control" th:field="*{username}" />
+        <span th:errors="*{username}" class="error"></span>
     </div>
     <div class="form-group">
         <label th:for="userLast">Last Name</label>
@@ -37,6 +38,8 @@
         <span th:errors="*{email}" class="error"></span>
     </div>
     <input type="submit" value="Sign Up" />
+
+    <a href="/login">Or Login</a>
 
 </form>
 
