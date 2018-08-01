@@ -32,7 +32,7 @@ public class User {
     private String userFirst;
 
     @NotNull
-    @Size(min=5, max=12)
+    //@Size(min=5, max=12)
     private String password;
 
     @Transient
@@ -48,6 +48,9 @@ public class User {
     @OneToMany
     @JoinColumn(name = "user_id")
     private List<Referrer> referrers = new ArrayList<>();
+
+    @NotNull
+    private double totalCommission;
 
     private boolean enabled;
 

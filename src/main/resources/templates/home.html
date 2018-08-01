@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <title>Welcome home</title>
+</head>
+<body class="container">
+
+<nav th:fragment="navigation">
+    <a th:href="@{'/user/view/'+${T(org.launchcode.prospector6.controllers.UserController).currentUser.id}}" th:text="${T(org.launchcode.prospector6.controllers.UserController).currentUser.userFirst}">User</a> |
+    <a href="/prospect">Prospect List</a> |
+    <a href="/referrer">Referrer List</a> |
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+</nav>
+
+</body>
+</html>

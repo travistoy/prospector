@@ -12,7 +12,7 @@ public class RootController
     @RequestMapping(method=RequestMethod.GET)
     public String index()
     {
-        return "login";
+        return "home";
     }
 
 }

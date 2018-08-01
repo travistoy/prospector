@@ -4,11 +4,20 @@ import org.launchcode.prospector6.models.User;
 import org.launchcode.prospector6.models.data.ProspectDao;
 import org.launchcode.prospector6.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +67,7 @@ public class UserController {
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public String processAddUserForm(@ModelAttribute @Valid User newUser, @RequestParam String password, @RequestParam String verify,
-                                     Errors errors, Model model) {
+                                     Errors errors, Model model, HttpServletRequest request, HttpServletResponse response) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Sign Up");
 
@@ -69,9 +78,33 @@ public class UserController {
             model.addAttribute("verify_error", verify_error);
             return "signup";
         }
+        BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+        String plainPassword = newUser.getPassword();
+        String encryptedPassword = enc.encode(plainPassword);
+        newUser.setPassword(encryptedPassword);
         newUser.setEnabled(true);
-        userDao.save(newUser);
-        return "redirect:user/view";
+        User saved = userDao.save(newUser);
+        autoLogin(newUser.getUsername(), plainPassword, request);
+
+        return "redirect:view/"+saved.getId();
+        }
+
+        @Resource
+        private AuthenticationManager authManager;
+
+        public boolean autoLogin( String username, String password, HttpServletRequest request) {
+
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+
+            Authentication authentication = authManager.authenticate(token);
+
+            SecurityContextHolder.getContext().setAuthentication(authentication );
+
+            //this step is important, otherwise the new login is not in session which is required by Spring Security
+            request.getSession(true).setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+
+
+            return true;
         }
 
 
