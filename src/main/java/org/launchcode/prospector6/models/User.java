@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +21,18 @@ public class User {
 
     @NotNull
     @Column(unique = true)
-    @Size(min=6, max=12)
+    //@Size(min=6, max=12)
+    @Pattern(regexp = "^[a-zA-Z0-9]+$")
     private String username;
 
     @NotNull
     @Size(min=2, max=30)
+    @Pattern(regexp = "^[a-zA-Z]$")
     private String userLast;
 
     @NotNull
     @Size(min=2, max=30)
+    @Pattern(regexp = "^[a-zA-Z]$")
     private String userFirst;
 
     @NotNull
@@ -39,6 +43,8 @@ public class User {
     private String verify;
 
     @Email
+    @Column(unique = true)
+    @Pattern(regexp="^([a-zA-Z0-9\\-\\.\\_]+)'+'(\\@)([a-zA-Z0-9\\-\\.]+)'+'(\\.)([a-zA-Z]{2,4})$")
     private String email;
 
     @OneToMany
@@ -48,6 +54,9 @@ public class User {
     @OneToMany
     @JoinColumn(name = "user_id")
     private List<Referrer> referrers = new ArrayList<>();
+
+
+    private List<Role> roles = new ArrayList<>();
 
     @NotNull
     private double totalCommission;
@@ -137,5 +146,5 @@ public class User {
 
     public List<Referrer> getReferrers() {return referrers;}
 
-
+    public List<Role> getRoles() {return roles;}
 }
