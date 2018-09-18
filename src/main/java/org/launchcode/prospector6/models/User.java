@@ -27,12 +27,10 @@ public class User {
 
     @NotNull
     @Size(min=2, max=30)
-    @Pattern(regexp = "^[a-zA-Z]$")
     private String userLast;
 
     @NotNull
     @Size(min=2, max=30)
-    @Pattern(regexp = "^[a-zA-Z]$")
     private String userFirst;
 
     @NotNull
@@ -44,7 +42,6 @@ public class User {
 
     @Email
     @Column(unique = true)
-    @Pattern(regexp="^([a-zA-Z0-9\\-\\.\\_]+)'+'(\\@)([a-zA-Z0-9\\-\\.]+)'+'(\\.)([a-zA-Z]{2,4})$")
     private String email;
 
     @OneToMany
@@ -55,8 +52,6 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Referrer> referrers = new ArrayList<>();
 
-
-    private List<Role> roles = new ArrayList<>();
 
     @NotNull
     private double totalCommission;
@@ -146,5 +141,5 @@ public class User {
 
     public List<Referrer> getReferrers() {return referrers;}
 
-    public List<Role> getRoles() {return roles;}
+
 }

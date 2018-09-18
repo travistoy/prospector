@@ -58,6 +58,36 @@ public class UserController {
         return "user/view";
     }
 
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String displayLoginForm(Model model) {
+        model.addAttribute("title", "Login");
+        model.addAttribute(new User());
+        return "login";
+    }
+
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public String processLoginForm( @RequestParam String username, @RequestParam String password, Model model, Errors errors, HttpServletRequest request, HttpServletResponse response) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Login");
+            return "login";}
+        if (!username.equals(userDao.findByUsername(username))) {
+            String username_error = "Usernames Do Not Match.";
+            model.addAttribute("username_error", username_error);
+            return "login";
+        }
+        User currentUser = userDao.findByUsername(username);
+        BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+        String plainPassword = password;
+        String encryptedPassword = enc.encode(plainPassword);
+        if (!encryptedPassword.equals(currentUser.getPassword())) {
+            String password_error = "Passwords Do Not Match.";
+            model.addAttribute("password_error", password_error);
+            return "login";}
+        autoLogin(currentUser.getUsername(), plainPassword, request);
+        return "redirect:view/"+currentUser.getId();
+    }
+
+
     @RequestMapping(value = "signup", method = RequestMethod.GET)
     public String displayAddUserForm(Model model) {
         model.addAttribute("title", "Sign Up");
