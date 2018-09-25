@@ -70,6 +70,7 @@ public class ProspectController {
             ref = referrerDao.findOne(referrerId);
         }
         newProspect.setReferrer(ref);
+        newProspect.setUser(currentUser);
         newProspect.setCreated(LocalDate.now());
 
         prospectDao.save(newProspect);

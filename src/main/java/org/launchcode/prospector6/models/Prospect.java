@@ -4,9 +4,11 @@ package org.launchcode.prospector6.models;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -21,27 +23,19 @@ public class Prospect {
 
     @NotNull
     @Size(min=2, max=30)
-    @Pattern(regexp = "^[a-zA-Z]$")
     private String name;
 
-    @Pattern(regexp = "^[a-zA-Z]$")
     private String firstName;
-
-    @Pattern(regexp = "^[a-zA-Z0-9]+$")
     private String address;
 
     private String city;
     private State state;
 
-    @Pattern(regexp="^\\d{5}(-\\d{4})?$")
     private String zip;
 
-    @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$")
     private String phone;
 
     @Email
-    @Column(unique = true)
-    @Pattern(regexp="^([a-zA-Z0-9\\-\\.\\_]+)'+'(\\@)([a-zA-Z0-9\\-\\.]+)'+'(\\.)([a-zA-Z]{2,4})$")
     private String email;
 
     private LineType type;

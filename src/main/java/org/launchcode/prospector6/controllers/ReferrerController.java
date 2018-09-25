@@ -50,6 +50,7 @@ public class ReferrerController {
         /*if (UserController.currentUser !=null) {
             newReferrer.setUser(UserController.currentUser);
         } */
+        newReferrer.setUser(currentUser);
         referrerDao.save(newReferrer);
         return "redirect:/referrer";
     }

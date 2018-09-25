@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         // TODO: configure the appropriate roles. For now just use one called ADMIN
 //       for (Role role : user.getRoles()){
-//            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+//          grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
 //      }
         grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
 

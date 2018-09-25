@@ -52,6 +52,11 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Referrer> referrers = new ArrayList<>();
 
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinTable(name="user_roles",
+            joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
+    private Role role;
 
     @NotNull
     private double totalCommission;
@@ -141,5 +146,12 @@ public class User {
 
     public List<Referrer> getReferrers() {return referrers;}
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
 }
