@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -52,24 +53,25 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Referrer> referrers = new ArrayList<>();
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="user_roles",
             joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
             inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
-    private Role role;
+    private Collection< Role > roles;
 
     @NotNull
     private double totalCommission;
 
     private boolean enabled;
 
-    public User(String username, String userLast, String userFirst, String password, String email, boolean enabled){
+    public User(String username, String userLast, String userFirst, String password, String email, boolean enabled, Collection < Role > role){
         this.username = username;
         this.userLast = userLast;
         this.userFirst = userFirst;
         this.password = password;
         this.email = email;
         this.enabled = enabled;
+        this.roles = roles;
     }
 
     public User(){}
@@ -146,12 +148,13 @@ public class User {
 
     public List<Referrer> getReferrers() {return referrers;}
 
-    public Role getRole() {
-        return role;
+    public Collection < Role > getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Collection < Role > roles) {
+        this.roles = roles;
     }
+
 
 }

@@ -1,5 +1,6 @@
 package org.launchcode.prospector6.controllers;
 
+import org.launchcode.prospector6.models.Role;
 import org.launchcode.prospector6.models.User;
 import org.launchcode.prospector6.models.data.ProspectDao;
 import org.launchcode.prospector6.models.data.UserDao;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -113,6 +115,7 @@ public class UserController {
         String encryptedPassword = enc.encode(plainPassword);
         newUser.setPassword(encryptedPassword);
         newUser.setEnabled(true);
+        newUser.setRoles(Arrays.asList(new Role("ROLE_USER")));
         User saved = userDao.save(newUser);
         autoLogin(newUser.getUsername(), plainPassword, request);
 
