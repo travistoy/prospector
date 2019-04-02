@@ -3,6 +3,7 @@ package org.launchcode.prospector6.controllers;
 import org.launchcode.prospector6.models.Role;
 import org.launchcode.prospector6.models.User;
 import org.launchcode.prospector6.models.data.ProspectDao;
+import org.launchcode.prospector6.models.data.RoleDao;
 import org.launchcode.prospector6.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +33,9 @@ public class UserController {
 
     @Autowired
     private ProspectDao prospectDao;
+
+    @Autowired
+    private RoleDao roleDao;
 
 
     public static User currentUser = new User();
@@ -99,7 +103,7 @@ public class UserController {
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public String processAddUserForm(@ModelAttribute @Valid User newUser, @RequestParam String password, @RequestParam String verify,
-                                     Errors errors, Model model, HttpServletRequest request, HttpServletResponse response) {
+                                     Errors errors, Model model, HttpServletRequest request, HttpServletResponse response, Role role) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Sign Up");
 
@@ -110,12 +114,23 @@ public class UserController {
             model.addAttribute("verify_error", verify_error);
             return "signup";
         }
+
+        Role roleCheck;
+        roleCheck = roleDao.findByName("ROLE_USER");
+
+        if(roleCheck != null){
+            newUser.setRoles(Arrays.asList(new Role("ROLE_USER")));
+        }
+        else {
+            newUser.setRoles(Arrays.asList(roleDao.findByName("ROLE_USER")));
+        }
+
+
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
         String plainPassword = newUser.getPassword();
         String encryptedPassword = enc.encode(plainPassword);
         newUser.setPassword(encryptedPassword);
         newUser.setEnabled(true);
-        newUser.setRoles(Arrays.asList(new Role("ROLE_USER")));
         User saved = userDao.save(newUser);
         autoLogin(newUser.getUsername(), plainPassword, request);
 

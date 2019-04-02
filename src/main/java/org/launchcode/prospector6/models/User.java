@@ -64,14 +64,13 @@ public class User {
 
     private boolean enabled;
 
-    public User(String username, String userLast, String userFirst, String password, String email, boolean enabled, Collection < Role > role){
+    public User(String username, String userLast, String userFirst, String password, String email, boolean enabled){
         this.username = username;
         this.userLast = userLast;
         this.userFirst = userFirst;
         this.password = password;
         this.email = email;
         this.enabled = enabled;
-        this.roles = roles;
     }
 
     public User(){}
