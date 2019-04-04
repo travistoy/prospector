@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("user")
@@ -115,15 +116,12 @@ public class UserController {
             return "signup";
         }
 
-        Role roleCheck;
-        roleCheck = roleDao.findByName("ROLE_USER");
-
-        if(roleCheck != null){
-            newUser.setRoles(Arrays.asList(new Role("ROLE_USER")));
-        }
-        else {
-            newUser.setRoles(Arrays.asList(roleDao.findByName("ROLE_USER")));
-        }
+        //Checks for ROLE_USER in Role DB and sets role
+        Optional<Role> rc = Optional.ofNullable(roleDao.findByName("ROLE_USER"));
+        if (rc.isPresent()) {
+                newUser.setRoles(Arrays.asList(roleDao.findByName("ROLE_USER")));
+            }
+            else { newUser.setRoles(Arrays.asList(new Role("ROLE_USER")));}
 
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();

@@ -14,6 +14,7 @@ public class Role {
 
     private String name;
 
+
     @OneToMany(cascade=CascadeType.ALL)
     @JoinTable(name="user_roles",
             joinColumns={@JoinColumn(name="role_id", referencedColumnName="id")},
@@ -42,6 +43,7 @@ public class Role {
         public void setName(String name) {
             this.name = name;
         }
+
 
         public List<User> getUserList() {
         return userList;
