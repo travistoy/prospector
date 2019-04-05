@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,30 +17,25 @@ public class Referrer {
 
     @NotNull
     @Size(min=2, max=30)
-    @Pattern(regexp = "^[a-zA-Z]$")
     private String referrerLast;
 
     @NotNull
     @Size(min=2, max=30)
-    @Pattern(regexp = "^[a-zA-Z]$")
     private String referrerFirst;
 
-    @Pattern(regexp = "^[a-zA-Z0-9]+$")
+
     private String referrerAddress;
     private String referrerCity;
     private String referrerState;
 
-    @Pattern(regexp="^\\d{5}(-\\d{4})?$")
     private String referrerZip;
 
-    @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$")
     private String referrerPhone;
 
     private boolean isSelected;
 
     @Email
     @Column(unique = true)
-    @Pattern(regexp="^([a-zA-Z0-9\\-\\.\\_]+)'+'(\\@)([a-zA-Z0-9\\-\\.]+)'+'(\\.)([a-zA-Z]{2,4})$", message="{invalid.email}")
     private String referrerEmail;
 
 

@@ -118,6 +118,7 @@ public class ProspectController {
         prospect.setQuoteDate(quoteDate);
         prospect.setCommission(commission);
         prospect.setSoldDate(soldDate);
+        prospect.setUser(currentUser);
         prospectDao.save(prospect);
         return "redirect:/prospect/view/{id}";
     }

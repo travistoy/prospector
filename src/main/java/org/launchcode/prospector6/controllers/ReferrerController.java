@@ -4,7 +4,9 @@ package org.launchcode.prospector6.controllers;
 import org.launchcode.prospector6.models.Prospect;
 import org.launchcode.prospector6.models.Referrer;
 import org.launchcode.prospector6.models.State;
+import org.launchcode.prospector6.models.data.ProspectDao;
 import org.launchcode.prospector6.models.data.ReferrerDao;
+import org.launchcode.prospector6.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,12 @@ import static org.launchcode.prospector6.controllers.UserController.currentUser;
 public class ReferrerController {
     @Autowired
     private ReferrerDao referrerDao;
+
+    @Autowired
+    private ProspectDao prospectDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @RequestMapping(value = "")
     public String index(Model model) {
@@ -79,6 +87,7 @@ public class ReferrerController {
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
     public String processEditReferrerForm( @Valid Referrer referrer, @PathVariable Integer id){
+        referrer.setUser(currentUser);
         referrerDao.save(referrer);
         return "redirect:/referrer/view/{id}";
     }
