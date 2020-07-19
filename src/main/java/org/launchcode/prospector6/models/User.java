@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by dcannarozzi on 10/28/17.
- */
+
 @Entity
 public class User {
 
@@ -58,9 +56,6 @@ public class User {
             joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
             inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
     private Collection< Role > roles;
-
-    @NotNull
-    private double totalCommission;
 
     private boolean enabled;
 

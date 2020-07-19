@@ -14,8 +14,10 @@
 <table class="table">
 
     <tr>
-        <th style="width:40%">Prospect Name</th>
-        <th style="width:30%">Referrer</th>
+        <th style="width:25%">Prospect Name</th>
+        <th style="width:25%">Referrer</th>
+        <th style="width:10%">Premium</th>
+        <th style="width:10%">Commission</th>
         <th style="width:10%">Date Created</th>
         <th style="width:10%">Date Quoted</th>
         <th style="width:10%">Date Sold</th>
@@ -24,6 +26,8 @@
     <tr th:each="prospect : ${prospects}">
         <td><a th:href="'/prospect/view/' + ${prospect.id}" th:text="${prospect.toString()}"></a></td>
         <td th:text="${prospect.referrer}"></td>
+        <td th:text="${'$ ' +prospect.premium}"></td>
+        <td th:text="${'$ ' +prospect.commission}"></td>
         <td th:text="${prospect.created}"></td>
         <td th:text="${prospect.quoteDate}"></td>
         <td th:text="${prospect.soldDate}"></td>

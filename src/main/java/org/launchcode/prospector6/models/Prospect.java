@@ -80,6 +80,7 @@ public class Prospect {
         this.quotedFromCreated = quotedFromCreated;
         this.soldFromCreated = soldFromCreated;
         this.soldFromQuoted = soldFromQuoted;
+
     }
 
     public Prospect(){}

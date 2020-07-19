@@ -6,24 +6,24 @@
 
 <h1 th:text="${title}">Default Title</h1>
 <div>
-    <label class="col-sm-2 control-label">Total Prospects:</label>
+    <label class="col-sm-4 control-label">Total Prospects:</label>
     <p th:text="${totalProspects}">Total Prospects</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label"> Total Quoted Prospects:</label>
+    <label class="col-sm-4 control-label"> Total Quoted Prospects:</label>
     <p th:text="${totalQuoted}">Quoted Prospects</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Total Prospects That Bought A Policy:</label>
+    <label class="col-sm-4 control-label">Total Prospects That Bought A Policy:</label>
     <p th:text="${totalSold}">Sold Prospects</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Total Commission:</label>
-    <p th:text="${totalCommission}">Total Commission</p>
+    <label class="col-sm-4 control-label">Total Premium:</label>
+    <p th:text="${'$ ' +totalPremium}">Total Premium</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Total Premium:</label>
-    <p th:text="${totalPremium}">Total Premium</p>
+    <label class="col-sm-4 control-label">Total Commission:</label>
+    <p th:text="${'$ ' +totalCommission}">Total Commission</p>
 </div>
 
 </body>

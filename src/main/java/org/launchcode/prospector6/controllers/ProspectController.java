@@ -116,7 +116,7 @@ public class ProspectController {
 
         prospect.setReferrer(ref);
         prospect.setQuoteDate(quoteDate);
-        prospect.setCommission(commission);
+        prospect.setCommission(prospect.getCommission());
         prospect.setSoldDate(soldDate);
         prospect.setUser(currentUser);
         prospectDao.save(prospect);

@@ -21,8 +21,13 @@ public interface ProspectDao extends CrudRepository<Prospect, Integer>{
         double getTotalPremiumByUserId(Integer userid);
 
     @Query(value = "SELECT coalesce(SUM(p.commission),0) from Prospect p WHERE user_id = ?1", nativeQuery = true)
-    double getTotalCommissionByUserId(Integer userid);
+        double getTotalCommissionByUserId(Integer userid);
 
+    @Query(value = "SELECT coalesce(COUNT(p.quote_date),0) from Prospect p WHERE user_id = ?1", nativeQuery = true)
+    double getQuoteDateByUserId(Integer userid);
+
+    @Query(value = "SELECT coalesce(COUNT(p.sold_date),0) from Prospect p WHERE user_id = ?1", nativeQuery = true)
+    double getSoldDateByUserId(Integer userid);
 
     List<Prospect>findByUserId(Integer userId);
 

@@ -6,47 +6,47 @@
 
 <h1 th:text="${title}">Default Title</h1>
 <div>
-    <label class="col-sm-2 control-label">Line Type:</label>
+    <label class="col-sm-4 control-label">Line Type:</label>
     <p th:text="${prospect.type}">Line Type</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Address:</label>
+    <label class="col-sm-4 control-label">Address:</label>
     <p th:text="${prospect.address + ', ' + prospect.city + ' ' + prospect.state + '   ' + prospect.zip}">Address</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Phone:</label>
+    <label class="col-sm-4 control-label">Phone:</label>
     <p th:text="${prospect.phone}">Phone</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Email:</label>
+    <label class="col-sm-4 control-label">Email:</label>
     <p th:text="${prospect.email}">Email</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Creation Date:</label>
+    <label class="col-sm-4 control-label">Creation Date:</label>
     <p th:text="${prospect.created}">Creation Date</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Referrer:</label>
+    <label class="col-sm-4 control-label">Referrer:</label>
     <p><span th:text="${prospect.referrer != null}? ${prospect.referrer.toString()}: '(No Referrer)'">Referrer</span></p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Quote Date:</label>
+    <label class="col-sm-4 control-label">Quote Date:</label>
     <p th:text="${prospect.quoteDate != null}? ${prospect.quoteDate}: '(No Quote Date)'">Quote Date:</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Sold Date:</label>
+    <label class="col-sm-4 control-label">Sold Date:</label>
     <p th:text="${prospect.soldDate != null}? ${prospect.soldDate}: '(No Sold Date)'">Sold Date</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Premium:</label>
+    <label class="col-sm-4 control-label">Premium:</label>
     <p th:text="${'$ ' +prospect.premium}">Premium</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Commission Rate (%):</label>
+    <label class="col-sm-4 control-label">Commission Rate (%):</label>
     <p th:text="${prospect.commissionRate}">Commission Rate</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Commission:</label>
+    <label class="col-sm-4 control-label">Commission:</label>
     <p th:text="${'$ '+prospect.commission}">Commission</p>
 </div>
 <div class="form-group">
@@ -54,15 +54,15 @@
     <label th:for="${prospect.thankYou}">Thank You Sent</label>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Days Between Creation and Quote:</label>
+    <label class="col-sm-4 control-label">Days Between Creation and Quote:</label>
     <p th:text="${prospect.quotedFromCreated}">quotedFromCreated</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Days Between Quote and Sold:</label>
+    <label class="col-sm-4 control-label">Days Between Quote and Sold:</label>
     <p th:text="${prospect.soldFromQuoted}">soldFromQuoted</p>
 </div>
 <div>
-    <label class="col-sm-2 control-label">Days Between Creation and Sold:</label>
+    <label class="col-sm-4 control-label">Days Between Creation and Sold:</label>
     <p th:text="${prospect.soldFromCreated}">soldFromCreated</p>
 </div>
 <div>

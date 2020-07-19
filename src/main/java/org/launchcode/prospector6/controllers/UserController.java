@@ -59,6 +59,8 @@ public class UserController {
         currentUser = userDao.findOne(id);
         model.addAttribute("title", currentUser);
         model.addAttribute("totalProspects", prospectDao.countByUserId(currentUser.getId()));
+        model.addAttribute("totalQuoted", prospectDao.getQuoteDateByUserId(currentUser.getId()));
+        model.addAttribute("totalSold", prospectDao.getSoldDateByUserId(currentUser.getId()));
         model.addAttribute("totalPremium", prospectDao.getTotalPremiumByUserId(currentUser.getId()));
         model.addAttribute("totalCommission", prospectDao.getTotalCommissionByUserId(currentUser.getId()));
 
